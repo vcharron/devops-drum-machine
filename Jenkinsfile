@@ -28,9 +28,11 @@ pipeline {
             //publish over ssh
                 steps {
                     unstash 'sources'
-                    sshPublisher(publishers: [sshPublisherDesc(configName: 'Local Docker', transfers:
-                            [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+',
-                                    remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'sources')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                    sshPublisher(publishers:
+                            [sshPublisherDesc(configName: 'Local Docker', transfers:
+                                    [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false,
+                                            makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '/sites',
+                                            remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'public/**/*.*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
                 }
         }
         stage('Integration testing') {
