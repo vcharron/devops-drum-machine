@@ -1,18 +1,16 @@
 pipeline {
-    agent any
+    agent {label 'linux'}
     tools {
         nodejs "NodeJS-12-6"
     }
     stages {
         stage('Compile') {
-            agent any
             steps {
                 sh 'npm install'
                 sh 'npm run build'
             }
         }
         stage('Unit Testing') {
-            agent any
             steps {
                 sh 'npm test'
             }
