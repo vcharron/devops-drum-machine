@@ -24,7 +24,6 @@ pipeline {
             }
         }
         stage('Deploy') {
-            //1 docker
             //publish over ssh
                 steps {
                     unstash 'sources'
@@ -38,7 +37,7 @@ pipeline {
         stage('Integration testing') {
             steps {
                 sleep 10
-                sh 'curl localhost:8082/index.html'
+                sh 'curl localhost:8008/index.html'
             }
         }
     }
