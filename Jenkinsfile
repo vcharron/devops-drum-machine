@@ -35,7 +35,7 @@ pipeline {
         stage('Integration testing') {
             steps {
                 sleep 10
-                sh 'curl localhost:8008/index.html'
+                sh 'curl student1/index.html'
             }
         }
     }
