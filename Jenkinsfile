@@ -17,24 +17,26 @@ pipeline {
                 sh 'npm test'
             }
         }
-        stage('Deploy') {
-            parallel {
-                stage('Deploy') {
-                    steps {
-                        sh 'sudo npm start &'
-                    }
-                }
-                stage('Archive Artifacts') {
-                    steps {
-                        archiveArtifacts '**/public/assets/**'
-                    }
-                }
+
+        stage('Archive and Stash'){
+            steps{
+                archive includes: '**/public/*'
+                stash includes: '**/public/*', name: 'sources'
             }
+        }
+        stage('Deploy') {
+            //1 docker
+            //publish over ssh
+                steps {
+                    sshPublisher(publishers: [sshPublisherDesc(configName: 'Local Docker', transfers:
+                            [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+',
+                                    remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'sources')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                }
         }
         stage('Integration testing') {
             steps {
                 sleep 10
-                sh 'sudo curl localhost'
+                sh 'curl localhost:8082/index.html'
             }
         }
     }
