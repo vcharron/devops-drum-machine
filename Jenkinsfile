@@ -20,14 +20,14 @@ pipeline {
 
         stage('Archive and Stash'){
             steps{
-                archive includes: '**/public/*'
-                stash includes: '**/public/*', name: 'sources'
+                stash includes: 'public/**/*.*', name: 'sources'
             }
         }
         stage('Deploy') {
             //1 docker
             //publish over ssh
                 steps {
+                    unstash 'sources'
                     sshPublisher(publishers: [sshPublisherDesc(configName: 'Local Docker', transfers:
                             [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+',
                                     remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: 'sources')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
