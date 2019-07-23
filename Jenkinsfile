@@ -20,7 +20,7 @@ pipeline {
 
         stage('Archive and Stash'){
             steps{
-                stash includes: 'public/**/*.*', name: 'sources'
+                stash includes: 'public/**/*', name: 'sources'
             }
         }
         stage('Deploy') {
@@ -31,7 +31,7 @@ pipeline {
                             [sshPublisherDesc(configName: 'Local Docker', transfers:
                                     [sshTransfer(cleanRemote: false, excludes: '', execCommand: '', execTimeout: 120000, flatten: false,
                                             makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.',
-                                            remoteDirectorySDF: false, removePrefix: 'public', sourceFiles: 'public/**/*.*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                                            remoteDirectorySDF: false, removePrefix: 'public', sourceFiles: 'public/**/*')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
                 }
         }
         stage('Integration testing') {
