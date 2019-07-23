@@ -3,8 +3,5 @@
 .tern-port
 node_modules/
 bower_components/
-css/main.css.map
-public/assets/css/
-public/assets/js/
 tests-results/
 .idea/*
