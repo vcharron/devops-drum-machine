@@ -7,7 +7,6 @@ pipeline {
         stage('Compile') {
             agent any
             steps {
-                git
                 sh 'npm install'
                 sh 'npm run build'
             }
