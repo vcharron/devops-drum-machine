@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        nodejs "NodeJS-12-6"
+    }
     stages {
         stage('Compile') {
             agent any
