@@ -8,4 +8,4 @@ RUN npm test
 
 FROM nginx:1.16-alpine
 COPY --from=buildmachine /usr/src/app/public/ /usr/share/nginx/html
-CMD [ "ls" ]
+RUN ls .
