@@ -1,6 +1,11 @@
-FROM node:12.2-alpine
+FROM node:10 as buildmachine
 WORKDIR /usr/src/app
-COPY . .
-RUN apk update && apk add git
+COPY package.json .
 RUN npm install
-RUN npm run-script build
+COPY . .
+RUN npm run build
+RUN npm test
+
+FROM nginx:1.16-alpine
+WORKDIR /usr/share/nginx/www
+COPY --from=buildmachine /usr/src/public/ .
