@@ -7,6 +7,6 @@ RUN npm run build
 RUN npm test
 
 FROM nginx:1.16-alpine
-WORKDIR /usr/share/nginx/www
+WORKDIR /usr/share/nginx/html
 COPY --from=buildmachine /usr/src/public/ .
 CMD [ "ls" ]
